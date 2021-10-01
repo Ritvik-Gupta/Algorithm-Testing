@@ -23,29 +23,21 @@ import (
 // }
 
 func main() {
-	register:= all_o_one_data_structure.Constructor()
+	register := all_o_one_data_structure.Constructor()
 	register.Inc("a")
 	register.Inc("b")
 	register.Inc("b")
 	register.Inc("c")
 	register.Inc("c")
 	register.Inc("c")
-	
+
 	register.Dec("b")
 	register.Dec("b")
 
 	println("\t", register.GetMinKey())
-	
+
 	register.Dec("a")
-	
+
 	println("\t", register.GetMaxKey())
 	println("\t", register.GetMinKey())
 }
-
-/*
-["AllOne","inc a","inc b","inc b","inc c","inc c","inc c","dec b", "dec b","getMinKey","dec a","getMaxKey","getMinKey"]
-
-[null,null,null,null,null,null,null,null,null,"b",null,"c","b"]
-
-[null,null,null,null,null,null,null,null,null,"a",null,"c","c"]
-*/
