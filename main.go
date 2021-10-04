@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/algorithm-testing/leetcode/all_o_one_data_structure"
+	"github.com/algorithm-testing/leetcode/design_circular_deque"
 )
 
 // import (
@@ -23,21 +23,46 @@ import (
 // }
 
 func main() {
-	register := all_o_one_data_structure.Constructor()
-	register.Inc("a")
-	register.Inc("b")
-	register.Inc("b")
-	register.Inc("c")
-	register.Inc("c")
-	register.Inc("c")
+	deque := design_circular_deque.Constructor(4)
+	
+	deque.Traverse()
+	println(deque.InsertFront(9), "\n")
+	
+	deque.Traverse()
+	println(deque.DeleteLast(), "\n")
+	
+	deque.Traverse()
+	println(deque.GetRear(), "\n")
+	
+	deque.Traverse()
+	println(deque.GetFront(), "\n")
+	
+	deque.Traverse()
+	println(deque.GetFront(), "\n")
+	
+	deque.Traverse()
+	println(deque.DeleteFront(), "\n")
+	
+	deque.Traverse()
+	println(deque.InsertFront(6), "\n")
+	
+	deque.Traverse()
+	println(deque.InsertLast(5), "\n")
 
-	register.Dec("b")
-	register.Dec("b")
+	deque.Traverse()	
+	println(deque.InsertFront(9), "\n")
 
-	println("\t", register.GetMinKey())
+	deque.Traverse()	
+	println(deque.GetFront(), "\n")
+	
+	deque.Traverse()	
+	println(deque.InsertFront(6), "\n")
 
-	register.Dec("a")
-
-	println("\t", register.GetMaxKey())
-	println("\t", register.GetMinKey())
+	
+	deque.Traverse()	
 }
+
+/*
+["getRear","getFront","getFront","deleteFront","insertFront","insertLast","insertFront","getFront","insertFront"]
+[[],[],[],[],[6],[5],[9],[],[6]]
+*/

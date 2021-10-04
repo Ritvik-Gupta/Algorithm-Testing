@@ -1,4 +1,4 @@
-package main
+package rcb_and_playoffs
 
 import "fmt"
 
