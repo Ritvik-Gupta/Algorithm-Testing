@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/algorithm-testing/leetcode/design_circular_deque"
+	"fmt"
+
+	"github.com/algorithm-testing/leetcode/clone_graph"
 )
 
 // import (
@@ -22,47 +24,50 @@ import (
 // 	graph.Print()
 // }
 
-func main() {
-	deque := design_circular_deque.Constructor(4)
-	
-	deque.Traverse()
-	println(deque.InsertFront(9), "\n")
-	
-	deque.Traverse()
-	println(deque.DeleteLast(), "\n")
-	
-	deque.Traverse()
-	println(deque.GetRear(), "\n")
-	
-	deque.Traverse()
-	println(deque.GetFront(), "\n")
-	
-	deque.Traverse()
-	println(deque.GetFront(), "\n")
-	
-	deque.Traverse()
-	println(deque.DeleteFront(), "\n")
-	
-	deque.Traverse()
-	println(deque.InsertFront(6), "\n")
-	
-	deque.Traverse()
-	println(deque.InsertLast(5), "\n")
+type Node = clone_graph.Node
 
-	deque.Traverse()	
-	println(deque.InsertFront(9), "\n")
+func printGraph(node *Node) {
+	nodeQueue := make(chan *Node, 5)
+	nodeQueue <- node
+	visitedNodes := make(map[*Node]struct{})
+	visitedNodes[node] = struct{}{}
 
-	deque.Traverse()	
-	println(deque.GetFront(), "\n")
-	
-	deque.Traverse()	
-	println(deque.InsertFront(6), "\n")
+iterationOverGraph:
+	for {
+		select {
+		case node := <-nodeQueue:
+			fmt.Printf("Node[%d] -> %p\n", node.Val, node)
+			fmt.Printf("Neighbours :\n")
 
-	
-	deque.Traverse()	
+			for idx, neighbour := range node.Neighbors {
+				fmt.Printf("\t%d. Node[%d] -> %p\n", idx+1, neighbour.Val, neighbour)
+				if _, ok := visitedNodes[neighbour]; !ok {
+					visitedNodes[neighbour] = struct{}{}
+					nodeQueue <- neighbour
+				}
+			}
+			fmt.Println()
+		default:
+			break iterationOverGraph
+		}
+	}
+	close(nodeQueue)
 }
 
-/*
-["getRear","getFront","getFront","deleteFront","insertFront","insertLast","insertFront","getFront","insertFront"]
-[[],[],[],[],[6],[5],[9],[],[6]]
-*/
+func main() {
+	node1 := &Node{Val: 1}
+	node2 := &Node{Val: 2}
+	node3 := &Node{Val: 3}
+	node4 := &Node{Val: 4}
+
+	node1.Neighbors = []*Node{node2, node4}
+	node2.Neighbors = []*Node{node3, node1}
+	node3.Neighbors = []*Node{node4, node2}
+	node4.Neighbors = []*Node{node1, node3}
+
+	clonedNode := clone_graph.CloneGraph(node1)
+
+	printGraph(node1)
+	println("\n\n")
+	printGraph(clonedNode)
+}
