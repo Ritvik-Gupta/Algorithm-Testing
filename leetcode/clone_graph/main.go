@@ -22,7 +22,7 @@ func newNodePair(original *Node, cloned *Node) NodePair {
 	return NodePair{original, cloned}
 }
 
-func CloneGraph(node *Node) *Node {
+func cloneGraph(node *Node) *Node {
 	if node == nil {
 		return nil
 	}
@@ -57,7 +57,6 @@ fromCloneOverGraph:
 			break fromCloneOverGraph
 		}
 	}
-	
 
 	nodeQueue := make(chan *Node, MAX_NUM_NODES_IN_GRAPH)
 	nodeQueue <- node
