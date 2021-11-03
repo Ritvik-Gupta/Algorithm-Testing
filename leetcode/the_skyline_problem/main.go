@@ -38,7 +38,6 @@ func (polygon *Polygon) add(rect *Rectangle) {
 
 	currVec := polygon.head
 	for currVec != polygon.tail {
-
 		currVec = currVec.next
 	}
 }
