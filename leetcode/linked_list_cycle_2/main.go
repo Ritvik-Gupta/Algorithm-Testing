@@ -5,14 +5,20 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func hasCycle(head *ListNode) bool {
+func detectCycle(head *ListNode) (snail *ListNode) {
 	turtle, rabbit := head, head
 	for rabbit != nil && rabbit.Next != nil {
 		turtle = turtle.Next
 		rabbit = rabbit.Next.Next
+
 		if turtle == rabbit {
-			return true
+			snail = head
+			for turtle != snail {
+				turtle = turtle.Next
+				snail = snail.Next
+			}
+			return
 		}
 	}
-	return false
+	return
 }
