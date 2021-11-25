@@ -1,7 +1,5 @@
 package lfu_cache
 
-import "fmt"
-
 type LFUStore struct {
 	key, value, rank int
 }
@@ -40,21 +38,6 @@ func (node *LFUNode) tryToDrop() (droppedKey int, hasBeenDropped bool) {
 	node.prev, node.next = nil, nil
 	prevNode.next, nextNode.prev = nextNode, prevNode
 	return node.store.key, true
-}
-
-func (node *LFUNode) asString() string {
-	if node.isRankToken() {
-		return "Token"
-	} else {
-		return fmt.Sprintf("(%v)", node.store)
-	}
-}
-
-func (head *LFUNode) debug() {
-	for node := head; node != nil; node = node.next {
-		fmt.Printf("%s ->\t", node.asString())
-	}
-	println()
 }
 
 type LFUCache struct {
@@ -114,14 +97,4 @@ func (cache *LFUCache) Put(key int, value int) {
 		cache.recordedKeys[key] = newNode
 		cache.getRankToken(newNode.store.rank).addNext(newNode)
 	}
-}
-
-func (cache *LFUCache) Debug() {
-	println("{")
-	for key, value := range cache.recordedKeys {
-		fmt.Printf("\t%d: %s,\n", key, value.asString())
-	}
-	println("}")
-	cache.rankTokens[len(cache.rankTokens)-1].debug()
-	println()
 }
