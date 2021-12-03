@@ -8,22 +8,16 @@ type Node struct {
 }
 
 func connect(root *Node) *Node {
-	if root == nil || root.Left == nil {
-		return root
+	for levelHead := root; levelHead != nil; levelHead = levelHead.Left {
+		for currNode := levelHead; currNode != nil; currNode = currNode.Next {
+			if currNode.Left != nil {
+				currNode.Left.Next = currNode.Right
+			}
+			if currNode.Right != nil && currNode.Next != nil {
+				currNode.Right.Next = currNode.Next.Left
+			}
+		}
+
 	}
-	recursiveLinkPairs(root.Left, root.Right)
 	return root
-}
-
-func recursiveLinkPairs(leftNode, rightNode *Node) {
-	if leftNode.Next != nil {
-		return
-	}
-
-	leftNode.Next = rightNode
-	if leftNode.Left != nil {
-		recursiveLinkPairs(leftNode.Left, leftNode.Right)
-		recursiveLinkPairs(rightNode.Left, rightNode.Right)
-		recursiveLinkPairs(leftNode.Right, rightNode.Left)
-	}
 }
