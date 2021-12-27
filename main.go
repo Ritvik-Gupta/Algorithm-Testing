@@ -4,7 +4,7 @@ import (
 	"container/heap"
 	"fmt"
 
-	"github.com/algorithm-testing/leetcode/valid_anagram"
+	valid_anagram "github.com/algorithm-testing/leetcode/easy/valid_anagram"
 )
 
 type PQElement struct {
