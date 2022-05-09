@@ -30,20 +30,13 @@ func flattenNestingGenerator(nestedList []*NestedInteger, generatorChannel chan 
 }
 
 func Constructor(nestedList []*NestedInteger) *NestedIterator {
-	obj := NestedIterator{generatorChannel: make(chan int, 1), hasNextGeneration: true}
+	obj := NestedIterator{generatorChannel: make(chan int), hasNextGeneration: true}
 	go flattenNestingGenerator(nestedList, obj.generatorChannel, &obj.hasNextGeneration)
 	return &obj
 }
 
 func (nestedIterator *NestedIterator) Next() int {
-	for {
-		select {
-		case val := <-nestedIterator.generatorChannel:
-			return val
-		default:
-			continue
-		}
-	}
+	return <-nestedIterator.generatorChannel
 }
 
 func (nestedIterator *NestedIterator) HasNext() bool {
